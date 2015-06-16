@@ -177,6 +177,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         cameraId = (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
         mCamera = Camera.open(cameraId);
         mCamera.setDisplayOrientation(90);
+
         try {
             if (mHolder != null) {
                 mCamera.setPreviewDisplay(mHolder);
