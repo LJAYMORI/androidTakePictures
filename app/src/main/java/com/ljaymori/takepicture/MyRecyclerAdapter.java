@@ -1,7 +1,6 @@
 package com.ljaymori.takepicture;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +10,26 @@ import java.util.ArrayList;
 
 public class MyRecyclerAdapter extends RecyclerView.Adapter<ImageItemView> {
 
-    private ArrayList<Bitmap> items = new ArrayList<Bitmap>();
+    private ArrayList<String> items = new ArrayList<String>();
     private Context mContext;
 
     public MyRecyclerAdapter(Context context) {
         mContext = context;
     }
 
-    public void add(Bitmap bm, int position) {
-        items.add(bm);
+    public void add(String path, int position) {
+        items.add(path);
         notifyItemInserted(position);
     }
 
-    public void remove(int position) {
-        items.remove(position);
-        notifyItemRemoved(position);
+    public void remove(String path) {
+        int position = items.indexOf(path);
+        if(position == -1) {
+
+        } else {
+            ((MainActivity)mContext).removeFile(items.remove(position));
+            notifyItemRemoved(position);
+        }
     }
 
     @Override
@@ -35,8 +39,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<ImageItemView> {
         ImageItemView itemView = new ImageItemView(v);
         itemView.setOnDeleteListener(new ImageItemView.OnDeleteListener() {
             @Override
-            public void onDelete() {
-                remove(position);
+            public void onDelete(String path) {
+                remove(path);
             }
         });
 
