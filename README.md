@@ -3,6 +3,9 @@ take pictures
 
 - https://github.com/boxme/SquareCamera
 
+# Screenshot
+![alt tag](https://github.com/LJAYMORI/androidTakePictures/blob/master/screenshot/Screenshot1.jpg)
+
 # Reference
 http://arabiannight.tistory.com/entry/257
 
