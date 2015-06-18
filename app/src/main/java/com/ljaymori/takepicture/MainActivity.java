@@ -417,6 +417,7 @@ public class MainActivity extends ActionBarActivity
 //        Bitmap bitmap = ((BitmapDrawable) photoImageView.getDrawable()).getBitmap();
         Uri photoUri = ImageUtility.savePicture(this, bitmap);
         mAdapter.add(photoUri.getPath(), mAdapter.getItemCount());
+        recyclerView.smoothScrollToPosition(mAdapter.getItemCount()-1);
 
 //        ((CameraActivity) getActivity()).returnPhotoUri(photoUri);
     }
