@@ -21,9 +21,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 
@@ -56,7 +54,7 @@ public class MainActivity extends ActionBarActivity
     private int mDisplayOrientation;
     private int mLayoutOrientation;
 
-    private int mCoverHeight;
+//    private int mCoverHeight;
     private int mPreviewHeight;
 
 
@@ -80,14 +78,9 @@ public class MainActivity extends ActionBarActivity
 
         mOrientationListener.enable();
 
-
         preview = (SquareCameraPreview) findViewById(R.id.surfaceView);
         preview.getHolder().addCallback(this);
 
-//        preview.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-//        mCamera = Camera.open();
-//        cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
-//        mCamera.setDisplayOrientation(90);
 
         btnChange = (Button) findViewById(R.id.button_change_picture);
         btnTake = (Button) findViewById(R.id.button_take_picture);
@@ -282,19 +275,6 @@ public class MainActivity extends ActionBarActivity
         return Camera.CameraInfo.CAMERA_FACING_BACK;
     }
 
-
-
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mCamera != null) {
-            mCamera.release();
-            mCamera = null;
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -379,58 +359,6 @@ public class MainActivity extends ActionBarActivity
         super.onStop();
     }
 
-//    private void takePicture() {
-//        Camera.ShutterCallback shutterCallback = new Camera.ShutterCallback() {
-//            @Override
-//            public void onShutter() {
-//                Log.i("takePicture", "onShutter");
-//            }
-//        };
-//
-//        Camera.PictureCallback pictureCallbackRAW = new Camera.PictureCallback(){
-//
-//            @Override
-//            public void onPictureTaken(byte[] data, Camera camera) {
-//                Log.i("takePicture", "onPictureTakenRAW");
-//            }
-//        };
-//
-//        Camera.PictureCallback pictureCallbackSave = new Camera.PictureCallback() {
-//            @Override
-//            public void onPictureTaken(byte[] data, Camera camera) {
-//                Log.i("takePicture", "onPictureTakenSave");
-//                BitmapFactory.Options opts = new BitmapFactory.Options();
-//                opts.inSampleSize = 4;
-//
-//                Bitmap bmPhoto = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
-//                String directory = Environment.getExternalStorageDirectory().getAbsolutePath() + "/picFolder";
-//                String filePath = "/picture_" + (System.currentTimeMillis() / 1000) + ".jpg";
-//
-//                if (saveBitmapToFileCache(bmPhoto, directory, filePath)) {
-//                    Log.i("file path", directory+filePath);
-//                    mAdapter.add(directory + filePath, mAdapter.getItemCount());
-//                    try {
-//                        String url = MediaStore.Images.Media.insertImage(getContentResolver(), directory+filePath, "my image", "test image");
-//                        Uri uri = Uri.parse(url);
-//                        if (uri != null) {
-//                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-//                        }
-//                    } catch (FileNotFoundException e) {
-//                        Log.i("fileNotFount", e.toString());
-//                        e.printStackTrace();
-//                    }
-//
-//                } else {
-//                    Log.i("save file error", directory + filePath);
-//                    removeFile(directory + filePath);
-//
-//                }
-//            }
-//        };
-//
-//        mCamera.takePicture(shutterCallback, pictureCallbackRAW, pictureCallbackSave);
-//    }
-
     public void removeFile(String path){
         File f = new File(path);
         if(f.exists()){
@@ -438,123 +366,20 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-//    private void changeCamera() {
-//        if (mCamera != null) {
-//            mCamera.release();
-//            mCamera = null;
-//        }
-//        cameraID = (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) ? Camera.CameraInfo.CAMERA_FACING_FRONT : Camera.CameraInfo.CAMERA_FACING_BACK;
-//        mCamera = Camera.open(cameraID);
-//        mCamera.setDisplayOrientation(90);
-//
-//        try {
-//            if (mHolder != null) {
-//                mCamera.setPreviewDisplay(mHolder);
-//                mCamera.startPreview();
-//            }
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    private Bitmap imgRotate(Bitmap bmp){
-//        int width = bmp.getWidth();
-//        int height = bmp.getHeight();
-//
-//        Matrix matrix = new Matrix();
-//        matrix.postRotate(90);
-//
-//        Bitmap resizedBitmap = Bitmap.createBitmap(bmp, 0, 0, width, height, matrix, true);
-//        bmp.recycle();
-//
-//        return resizedBitmap;
-//    }
-
-    private boolean saveBitmapToFileCache(Bitmap bitmap, String directory, String filename) {
-        Log.i("saveBitmap - bitmap", bitmap.getConfig().toString());
-        boolean isSuccess = true;
-
-        File file = new File(directory);
-
-        // If no folders
-        if (!file.exists()) {
-            file.mkdirs();
-            // Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        }
-
-        File fileCacheItem = new File(directory + filename);
-        OutputStream out = null;
-
-        try {
-            fileCacheItem.createNewFile();
-            out = new FileOutputStream(fileCacheItem);
-
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-//            Log.i(TAG, "filesize : " + fileCacheItem.length() / (long) 1024 + "KB");
-        } catch (Exception e) {
-            isSuccess = false;
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                isSuccess = false;
-                e.printStackTrace();
-            }
-        }
-
-        Log.i("fileCacheItem", fileCacheItem.getAbsolutePath());
-        return isSuccess;
-    }
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         mHolder = holder;
 
         getCamera(cameraID);
         startCameraPreview();
-
-//        mHolder = holder;
-//        if (mCamera == null) {
-//            cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
-//            mCamera = Camera.open(cameraID);
-//
-//            mCamera.setDisplayOrientation(90);
-//        }
-//        try {
-//            mCamera.setPreviewDisplay(mHolder);
-//            mCamera.startPreview();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-//        try {
-//            mCamera.stopPreview();
-//        } catch(Exception e) {
-//
-//        }
-//
-//        mHolder = holder;
-//        try {
-//            mCamera.setPreviewDisplay(holder);
-//            mCamera.startPreview();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-//        mHolder = null;
-//        mCamera.stopPreview();
-//        mCamera.release();
-//        mCamera = null;
     }
 
     @Override
@@ -566,8 +391,6 @@ public class MainActivity extends ActionBarActivity
         ) % 360;
 
         savePicture(rotatePicture(rotation, data));
-
-
     }
 
     private Bitmap rotatePicture(int rotation, byte[] data) {
@@ -591,17 +414,12 @@ public class MainActivity extends ActionBarActivity
 
     private void savePicture(Bitmap bitmap) {
 //        ImageView photoImageView = (ImageView) getView().findViewById(R.id.photo);
-
 //        Bitmap bitmap = ((BitmapDrawable) photoImageView.getDrawable()).getBitmap();
         Uri photoUri = ImageUtility.savePicture(this, bitmap);
         mAdapter.add(photoUri.getPath(), mAdapter.getItemCount());
 
 //        ((CameraActivity) getActivity()).returnPhotoUri(photoUri);
     }
-
-
-
-
 
 
     /**
