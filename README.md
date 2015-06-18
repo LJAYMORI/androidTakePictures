@@ -1,6 +1,8 @@
 # androidTakePictures
 take pictures
 
+- https://github.com/boxme/SquareCamera
+
 # Reference
 http://arabiannight.tistory.com/entry/257
 
