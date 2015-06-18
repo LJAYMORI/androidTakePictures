@@ -3,4 +3,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="flash_auto">Flash Auto</string>
+    <string name="flash_on">Flash On</string>
+    <string name="flash_off">Flash Off</string>
 </resources>

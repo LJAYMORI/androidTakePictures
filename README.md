@@ -8,4 +8,6 @@ http://gogorchg.tistory.com/entry/Android-Bitmap-%EC%9D%B4%EB%AF%B8%EC%A7%80-%EA
 
 http://ilililililililililili.blogspot.kr/2013/07/android.html
 
+https://github.com/boxme/SquareCamera
+
 Thank you :)

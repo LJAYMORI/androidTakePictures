@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,57 +6,55 @@
     android:background="#d2d2d3"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <com.ljaymori.takepicture.SquareCameraPreview
+        android:id="@+id/surfaceView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView" >
+        android:layout_height="wrap_content"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#ffffff"
+        android:layout_alignBottom="@+id/surfaceView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-            <SurfaceView
-                android:id="@+id/surfaceView"
-                android:layout_width="352dp"
-                android:layout_height="198dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp" />
+    </android.support.v7.widget.RecyclerView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="30dp"
-                android:background="#ffffff">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom|center"
+        android:layout_below="@+id/surfaceView"
+        android:layout_centerHorizontal="true">
 
-            </android.support.v7.widget.RecyclerView>
+        <Button
+            android:id="@+id/button_change_picture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Change"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp">
+        <Button
+            android:id="@+id/button_take_picture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Capture" />
+    </LinearLayout>
 
-                <Button
-                    android:id="@+id/button_change_picture"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Change" />
-
-                <Button
-                    android:id="@+id/button_take_picture"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Capture" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/flash_auto"
+        android:id="@+id/button_flash_picture"
+        android:layout_above="@+id/recyclerView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
-</LinearLayout>
+</RelativeLayout>
